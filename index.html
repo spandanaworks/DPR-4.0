@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>DPR Studio | Bank-Ready Detailed Project Reports</title>
+  <!-- Google Fonts + Font Awesome 6 + Bootstrap Icons (light) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f4f7fc;
+      color: #0a1c2f;
+      line-height: 1.45;
+    }
+
+    /* --- AUTH MODULES (airy, premium) --- */
+    .auth-fullscreen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(ellipse at 20% 30%, #1a2f6e, #0f1a3a);
+      padding: 2rem;
+    }
+    .auth-glass-card {
+      background: white;
+      border-radius: 2rem;
+      max-width: 480px;
+      width: 100%;
+      overflow: hidden;
+      box-shadow: 0 30px 45px -12px rgba(0,0,0,0.35);
+    }
+    .auth-grad-header {
+      background: linear-gradient(105deg, #2b3b8c, #7c3aed);
+      padding: 2rem 1.8rem;
+      text-align: center;
+      color: white;
+    }
+    .auth-body-area {
+      padding: 2rem 2rem 2rem 2rem;
+    }
+    .btn-auth-primary {
+      background: linear-gradient(95deg, #2563eb, #7c3aed);
+      border: none;
+      border-radius: 3rem;
+      padding: 0.85rem;
+      font-weight: 700;
+      color: white;
+      width: 100%;
+      transition: all 0.2s;
+    }
+
+    /* MAIN DASHBOARD - vibrant & spacious */
+    .dashboard-master {
+      display: none;
+    }
+    .flex-layout-dpr {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR (Premium dark, improved spacing) */
+    .sidebar-premium-dpr {
+      width: 290px;
+      background: linear-gradient(180deg, #0f172a 0%, #0a0f20 100%);
+      color: #eef2ff;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      box-shadow: 5px 0 20px rgba(0,0,0,0.2);
+      z-index: 20;
+      padding: 1.8rem 0 2rem 0;
+    }
+    .brand-logo {
+      padding: 0 1.5rem 1.5rem 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 1.2rem;
+    }
+    .logo-text-glow {
+      font-size: 1.7rem;
+      font-weight: 800;
+      background: linear-gradient(120deg, #fbbf24, #f97316);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .user-info-side {
+      background: rgba(255,255,255,0.05);
+      border-radius: 1.5rem;
+      padding: 0.8rem 1rem;
+      margin: 1.2rem 1.2rem 1rem 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .logout-side-btn {
+      background: rgba(239,68,68,0.15);
+      border: none;
+      color: #fecaca;
+      border-radius: 2rem;
+      padding: 0.6rem;
+      width: calc(100% - 2rem);
+      margin: 1rem 1rem 0 1rem;
+      font-weight: 600;
+    }
+    .nav-side-list {
+      list-style: none;
+      padding: 0.5rem 0.8rem;
+    }
+    .nav-side-item {
+      margin-bottom: 0.4rem;
+    }
+    .nav-link-side {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0.7rem 1.2rem;
+      border-radius: 2rem;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: #cbd5e6;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .nav-link-side i {
+      width: 26px;
+    }
+    .nav-link-side.active {
+      background: linear-gradient(95deg, #2563eb, #6d28d9);
+      color: white;
+      box-shadow: 0 6px 12px rgba(37,99,235,0.25);
+    }
+
+    /* MAIN CONTENT (generous spacing, cards) */
+    .content-dpr-main {
+      flex: 1;
+      margin-left: 290px;
+      padding: 2.2rem 2.5rem 3rem 2.5rem;
+      background: #f8fafd;
+    }
+    .progress-top-card {
+      background: white;
+      border-radius: 1.8rem;
+      padding: 1rem 2rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+      border: 1px solid #eef2fa;
+    }
+    .progress-left-group {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+    .step-pill-badge {
+      background: #eef2ff;
+      border-radius: 3rem;
+      padding: 0.4rem 1.2rem;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #2563eb;
+    }
+    .progress-bar-line {
+      width: 260px;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+    .progress-fill-dynamic {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #2563eb, #7c3aed);
+    }
+    /* section cards: spacious, clean */
+    .dpr-section-card {
+      background: white;
+      border-radius: 2rem;
+      padding: 2rem 2.2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.03);
+      border: 1px solid #eef2fa;
+    }
+    .section-title-main {
+      font-size: 1.65rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #1f2a48, #2563eb);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      border-left: 5px solid #f97316;
+      padding-left: 1rem;
+      margin-bottom: 1.8rem;
+    }
+    .grid-2, .grid-3, .grid-4 {
+      display: grid;
+      gap: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .input-modern {
+      background: #fafcff;
+      border: 1px solid #e2edf2;
+      border-radius: 1.2rem;
+      padding: 0.8rem 1.1rem;
+      font-size: 0.9rem;
+      width: 100%;
+      transition: 0.2s;
+    }
+    .input-modern:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+      outline: none;
+      background: white;
+    }
+    .btn-next-spacious {
+      background: linear-gradient(105deg, #059669, #10b981);
+      border: none;
+      border-radius: 3rem;
+      padding: 0.75rem 2.2rem;
+      font-weight: 700;
+      color: white;
+      margin-top: 1rem;
+    }
+    .btn-outline-accent-add {
+      background: white;
+      border: 1.5px dashed #2563eb;
+      border-radius: 2rem;
+      padding: 0.6rem 1.4rem;
+      font-weight: 600;
+      color: #2563eb;
+      margin-top: 0.6rem;
+    }
+    .table-elegant {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      margin: 0.5rem 0 1rem 0;
+    }
+    .table-elegant th {
+      background: #f1f5f9;
+      padding: 1rem 0.8rem;
+      font-weight: 700;
+    }
+    .table-elegant td {
+      padding: 0.8rem 0.6rem;
+      border-bottom: 1px solid #ecf3fa;
+    }
+    .btn-generate-warning {
+      background: linear-gradient(105deg, #f97316, #dc2626);
+      border: none;
+      border-radius: 3rem;
+      padding: 1rem 2.5rem;
+      font-weight: 800;
+      font-size: 1rem;
+      box-shadow: 0 12px 18px -6px rgba(220,38,38,0.35);
+    }
+    .report-overlay-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85);
+      z-index: 9999;
+      overflow: auto;
+    }
+    .report-paper-modal {
+      background: white;
+      margin: 2rem auto;
+      max-width: 1100px;
+      border-radius: 2rem;
+      padding: 2rem;
+      position: relative;
+    }
+    @media (max-width: 780px) {
+      .sidebar-premium-dpr { position: relative; width: 100%; height: auto; }
+      .content-dpr-main { margin-left: 0; padding: 1.5rem; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN VIEW -->
+<div id="loginView" class="auth-fullscreen">
+  <div class="auth-glass-card">
+    <div class="auth-grad-header"><i class="fas fa-chart-line fa-2x"></i><h2 class="mt-2">DPR Studio</h2><p>Bank-Ready Project Reports</p></div>
+    <div class="auth-body-area">
+      <div id="loginErrorMsg" class="alert alert-danger" style="display:none; border-radius: 2rem;"></div>
+      <form id="loginFormHandler">
+        <input type="email" id="loginEmailField" class="input-modern mb-3" placeholder="Email address" required>
+        <input type="password" id="loginPasswordField" class="input-modern mb-4" placeholder="Password" required>
+        <button type="submit" class="btn-auth-primary">Login <i class="fas fa-arrow-right"></i></button>
+      </form>
+      <div class="text-center mt-4">No account? <a href="#" id="showRegisterBtn" style="color:#7c3aed; font-weight:600;">Create free account</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- REGISTER VIEW -->
+<div id="registerView" class="auth-fullscreen" style="display:none;">
+  <div class="auth-glass-card">
+    <div class="auth-grad-header"><i class="fas fa-user-plus"></i><h3>Get Started</h3></div>
+    <div class="auth-body-area">
+      <div id="regErrorMsg" class="alert" style="display:none;"></div>
+      <form id="registerFormHandler">
+        <input type="text" id="regFullName" class="input-modern mb-3" placeholder="Full name" required>
+        <input type="email" id="regEmailAddr" class="input-modern mb-3" placeholder="Email" required>
+        <input type="password" id="regPasswordInput" class="input-modern mb-3" placeholder="Password" required>
+        <input type="password" id="regConfirmInput" class="input-modern mb-4" placeholder="Confirm password" required>
+        <button type="submit" class="btn-auth-primary">Sign up</button>
+      </form>
+      <div class="text-center mt-3"><a href="#" id="backToLoginBtn" style="color:#7c3aed;">← Back to login</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN DASHBOARD (FULL LOGIC + ALL SECTIONS) -->
+<div id="dashboardMainApp" class="dashboard-master">
+  <div class="flex-layout-dpr">
+    <aside class="sidebar-premium-dpr">
+      <div class="brand-logo">
+        <!-- VKF Logo -->
+        <div style="text-align: center; margin-bottom: 1rem;">
+          <img src="VKF.png" alt="VISION KARNATAKA FOUNDATION" style="max-width: 100%; height: auto; max-height: 60px; object-fit: contain;">
+        </div>
+        
+        <!-- Organization Name -->
+        <div style="text-align: center; margin-bottom: 1.2rem; font-size: 0.7rem; color: #facc15; font-weight: 600;">
+          VISION KARNATAKA FOUNDATION
+        </div>
+        
+        <div class="user-info-side">
+          <i class="fas fa-user-astronaut fa-lg"></i> 
+          <span id="sideUserName">User</span>
+        </div>
+        
+        <button id="globalLogoutButton" class="logout-side-btn">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+      
+      <ul class="nav-side-list" id="sidebarNavigation">
+        <li class="nav-side-item" data-sidx="0">
+          <div class="nav-link-side active">
+            <i class="fas fa-building"></i> 01. Basic Information
+          </div>
+        </li>
+        <li class="nav-side-item" data-sidx="1">
+          <div class="nav-link-side">
+            <i class="fas fa-users"></i> 02. Members
+          </div>
+        </li>
+        <li class="nav-side-item" data-sidx="2">
+          <div class="nav-link-side">
+            <i class="fas fa-boxes"></i> 03. Product
+          </div>
+        </li>
+        <li class="nav-side-item" data-sidx="3">
+          <div class="nav-link-side">
+            <i class="fas fa-microchip"></i> 04. Machinery
+          </div>
+        </li>
+        <li class="nav-side-item" data-sidx="4">
+          <div class="nav-link-side">
+            <i class="fas fa-chart-line"></i> 05. Market
+          </div>
+        </li>
+        <li class="nav-side-item" data-sidx="5">
+          <div class="nav-link-side">
+            <i class="fas fa-user-group"></i> 06. HR Plan
+          </div>
+        </li>
+        <li class="nav-side-item" data-sidx="6">
+          <div class="nav-link-side">
+            <i class="fas fa-coins"></i> 07. Financials
+          </div>
+        </li>
+        <li class="nav-side-item" data-sidx="7">
+          <div class="nav-link-side">
+            <i class="fas fa-chart-simple"></i> 08. Projections
+          </div>
+        </li>
+        <li class="nav-side-item" data-sidx="8">
+          <div class="nav-link-side">
+            <i class="fas fa-hard-hat"></i> 09. Infrastructure
+          </div>
+        </li>
+        <li class="nav-side-item" data-sidx="9">
+          <div class="nav-link-side">
+            <i class="fas fa-chart-pie"></i> 10. SWOT
+          </div>
+        </li>
+        <li class="nav-side-item" data-sidx="10">
+          <div class="nav-link-side">
+            <i class="fas fa-hand-holding-heart"></i> 11. Social Impact
+          </div>
+        </li>
+        <li class="nav-side-item" data-sidx="11">
+          <div class="nav-link-side">
+            <i class="fas fa-credit-card"></i> 12. Credit
+          </div>
+        </li>
+        <li class="nav-side-item" data-sidx="12">
+          <div class="nav-link-side">
+            <i class="fas fa-stamp"></i> 13. Declaration
+          </div>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="content-dpr-main">
+      <div class="progress-top-card">
+        <div class="progress-left-group"><span class="step-pill-badge"><i class="fas fa-tasks"></i> Journey</span><div class="progress-bar-line"><div id="globalProgressFill" class="progress-fill-dynamic"></div></div><span id="stepCounterSpan" class="fw-bold">Step 1/13</span></div>
+        <div><i class="fas fa-file-invoice-dollar text-primary"></i> <span class="text-muted">Bank compliant format</span></div>
+      </div>
+
+      <!-- SECTION 01: BASIC INFO (matches original fields) -->
+        <div id="sectionCard0" class="dpr-section-card">
+          <div class="section-title-main">🏢 Business Identity</div>
+          
+          <div class="grid-2">
+            <input type="text" name="business_name" class="input-modern" placeholder="Business Name" required>
+            <input type="text" name="group_name" class="input-modern" placeholder="Group/Organization Name">
+          </div>
+          
+          <textarea name="business_desc" class="input-modern" rows="2" placeholder="Brief Description of the Business"></textarea>
+          
+          <div class="grid-3 mt-2">
+            <select name="entity_type" class="input-modern">
+              <option>Private Limited Company</option>
+              <option>LLP</option>
+              <option>Partnership</option>
+              <option>Proprietorship</option>
+              <option>JLG</option>
+              <option>SHG</option>
+            </select>
+            <input type="text" name="cin" class="input-modern" placeholder="CIN No.">
+            <input type="text" name="gst_no" class="input-modern" placeholder="GST No.">
+          </div>
+          
+          <div class="grid-3">
+            <input type="text" name="pan_no" class="input-modern" placeholder="PAN No.">
+            <input type="text" name="udyam_no" class="input-modern" placeholder="MSME/Udyam No.">
+            <input type="text" name="fssai_no" class="input-modern" placeholder="FSSAI License No.">
+          </div>
+          
+          <div class="grid-3">
+            <input type="text" name="village" class="input-modern" placeholder="Village/Town">
+            <input type="text" name="block" class="input-modern" placeholder="Block/Taluk">
+            <input type="text" name="district" class="input-modern" placeholder="District">
+            <input type="text" name="state" class="input-modern" placeholder="State">
+          </div>
+          
+          <div class="grid-3">
+            <input type="text" name="contact_name" class="input-modern" placeholder="Contact Person Name">
+            <input type="text" name="contact_number" class="input-modern" placeholder="Contact Number">
+            <input type="email" name="email" class="input-modern" placeholder="Email Address">
+          </div>
+          
+          <div class="grid-3">
+            <input type="text" name="bank_name" class="input-modern" placeholder="Bank Name">
+            <input type="text" name="bank_branch" class="input-modern" placeholder="Bank Branch">
+            <input type="text" name="account_number" class="input-modern" placeholder="Account Number">
+            <input type="text" name="ifsc" class="input-modern" placeholder="IFSC Code">
+          </div>
+          
+          <button type="button" class="btn-next-spacious nextSectionBtn">Next →</button>
+        </div>
+        
+
+        <!-- SECTION 02: MEMBERS (dynamic) -->
+        <div id="sectionCard1" class="dpr-section-card" style="display:none;"><div class="section-title-main">👥 Members / Partners</div>
+          <div class="table-responsive"><table class="table-elegant"><thead><tr><th>#</th><th>Name</th><th>Designation</th><th>Gender</th><th>Age</th><th>Qualification</th><th>Experience</th><th>Mobile</th><th></th></tr></thead><tbody id="membersContainerTable"></tbody></table></div>
+          <button type="button" id="addMemberBtnDynamic" class="btn-outline-accent-add"><i class="fas fa-plus"></i> Add Member</button>
+          <button type="button" class="btn-next-spacious nextSectionBtn mt-3">Next →</button>
+        </div>
+
+        <!-- SECTION 2: PRODUCT -->
+        <div id="sectionCard2" class="dpr-section-card" style="display:none;">
+          <div class="section-title-main">📦 Product / Service Details</div>
+          
+          <div class="grid-2">
+            <textarea name="primary_product" rows="2" class="input-modern" placeholder="Product Name / Category"></textarea>
+            <input type="text" name="hsn_code" class="input-modern" placeholder="HSN Code">
+          </div>
+          
+          <div class="grid-3">
+            <input type="number" name="daily_capacity" class="input-modern" placeholder="Daily Production Capacity">
+            <select name="capacity_unit" class="input-modern">
+              <option>kg</option>
+              <option>liters</option>
+              <option>pieces</option>
+              <option>units</option>
+            </select>
+            <input type="number" name="selling_price" class="input-modern" placeholder="Selling Price per Unit (₹)">
+          </div>
+          
+          <textarea name="raw_materials" rows="2" class="input-modern" placeholder="Key Raw Materials Required"></textarea>
+          
+          <div class="grid-3">
+            <input type="number" name="input_cost" class="input-modern" placeholder="Raw Material Cost per Unit (₹)">
+            <input type="number" name="working_days" class="input-modern" placeholder="Working Days per Year" value="300">
+            <input type="number" name="market_growth" class="input-modern" placeholder="Market Growth Rate (%)" value="20">
+          </div>
+          
+          <textarea name="usp" rows="2" class="input-modern" placeholder="Unique Selling Proposition (USP)"></textarea>
+          
+          <button type="button" class="btn-next-spacious nextSectionBtn">Next →</button>
+        </div>
+
+        <!-- SECTION 03: MACHINERY -->
+        <div id="sectionCard3" class="dpr-section-card" style="display:none;"><div class="section-title-main">⚙️ Machinery & Equipment</div>
+          <div class="table-responsive"><table class="table-elegant"><thead><tr><th>#</th><th>Machine Name</th><th>Quantity</th><th>Unit Price (₹)</th><th>Total (₹)</th><th></th></tr></thead><tbody id="machineryTableDynamic"></tbody>}</table></div>
+          <button type="button" id="addMachineryBtnForm" class="btn-outline-accent-add"><i class="fas fa-plus"></i> Add Machinery</button>
+          <div class="grid-2 mt-3"><input type="text" name="supplier_name" placeholder="Supplier Name" class="input-modern"><input type="text" name="supplier_location" placeholder="Supplier Location" class="input-modern"></div>
+          <button type="button" class="btn-next-spacious nextSectionBtn mt-3">Next →</button>
+        </div>
+
+        <!-- SECTION 04: MARKET -->
+        <div id="sectionCard4" class="dpr-section-card" style="display:none;"><div class="section-title-main">🎯 Market Analysis</div>
+          <textarea name="target_customers" rows="2" class="input-modern" placeholder="Target Customers / Market Segments"></textarea>
+          <textarea name="sales_location" rows="2" class="input-modern mt-3" placeholder="Sales Locations / Distribution Channels"></textarea>
+          <textarea name="competitors" rows="2" class="input-modern mt-3" placeholder="Main Competitors"></textarea>
+          <button type="button" class="btn-next-spacious nextSectionBtn mt-2">Next →</button>
+        </div>
+
+        <!-- SECTION 5: HR (Work Distribution) -->
+        <div id="sectionCard5" class="dpr-section-card" style="display:none;"><div class="section-title-main">👷 Human Resource Plan</div>
+          <table class="table-elegant"><thead><tr><th>Category</th><th>Number of Persons</th><th>Monthly Salary (₹)</th><th>Monthly Cost (₹)</th></tr></thead><tbody>
+            <tr><td>Management</td><td><input type="number" id="mgmt_count" class="input-modern" value="5"></td><td><input type="number" id="mgmt_salary" class="input-modern" value="50000"></td><td><input type="number" id="mgmt_cost" readonly class="input-modern"></td></tr>
+            <tr><td>Supervisory</td><td><input type="number" id="sup_count" class="input-modern" value="5"></td><td><input type="number" id="sup_salary" class="input-modern" value="25000"></td><td><input type="number" id="sup_cost" readonly class="input-modern"></td></tr>
+            <tr><td>Skilled Workers</td><td><input type="number" id="skill_count" value="10" class="input-modern"></td><td><input id="skill_salary" value="20000" class="input-modern"></td><td><input id="skill_cost" readonly class="input-modern"></td></tr>
+            <tr><td>Unskilled Workers</td><td><input id="unskill_count" value="10" class="input-modern"></td><td><input id="unskill_salary" value="15000" class="input-modern"></td><td><input id="unskill_cost" readonly class="input-modern"></td></tr>
+            <tr><td>Administrative</td><td><input id="admin_count" value="3" class="input-modern"></td><td><input id="admin_salary" value="25000" class="input-modern"></td><td><input id="admin_cost" readonly class="input-modern"></td></tr>
+          </tbody><tfoot><tr><th>TOTAL</th><th id="total_staff_display">0</th><th></th><th id="total_salary_cost_display">0</th></tr></tfoot></table>
+          <button type="button" class="btn-next-spacious nextSectionBtn">Next →</button>
+        </div>
+
+                <!-- SECTION 6: FINANCIALS -->
+        <div id="sectionCard6" class="dpr-section-card" style="display:none;">
+          <div class="section-title-main">💰 Financial Estimates</div>
+          
+          <h6 class="mt-2 mb-2">A. Project Cost Breakdown</h6>
+          
+          <div class="grid-2">
+            <input type="text" id="land_area" class="input-modern" placeholder="Land Area (acres)">
+            <input type="number" id="land_cost" class="input-modern project-cost" placeholder="Land Cost (₹)">
+          </div>
+          
+          <div class="grid-2">
+            <input type="text" id="building_area" class="input-modern" placeholder="Building Area (sq.ft.)">
+            <input type="number" id="building_cost" class="input-modern project-cost" placeholder="Building Cost (₹)">
+          </div>
+          
+          <div class="grid-2">
+            <input type="number" id="machinery_total" class="input-modern" readonly placeholder="Plant &amp; Machinery (₹)">
+            <input type="number" id="furniture_cost" class="input-modern project-cost" placeholder="Furniture &amp; Fixtures (₹)">
+          </div>
+          
+          <div class="grid-2">
+            <input type="number" id="working_capital" class="input-modern" placeholder="Working Capital (₹)" value="5000000">
+            <input type="number" id="other_cost" class="input-modern" placeholder="Other Preliminary Expenses (₹)">
+          </div>
+          
+          <div class="grid-2">
+            <strong>TOTAL PROJECT COST</strong>
+            <input type="number" id="total-cost" class="input-modern" readonly placeholder="₹">
+          </div>
+          
+          <h6 class="mt-3">B. Means of Finance</h6>
+          
+          <div class="grid-2">
+            <input type="number" id="promoter_contribution" class="input-modern" placeholder="Promoter's Contribution (₹)">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span>% of Total</span>
+              <input type="text" id="promoter_percent" class="input-modern" readonly style="flex: 1;">
+            </div>
+          </div>
+          
+          <div class="grid-2">
+            <input type="number" id="bank_loan" class="input-modern" placeholder="Bank Loan / Term Loan (₹)">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span>% of Total</span>
+              <input type="text" id="loan_percent" class="input-modern" readonly style="flex: 1;">
+            </div>
+          </div>
+          
+          <div class="grid-2">
+            <input type="number" id="subsidy" class="input-modern" placeholder="Subsidy / Grant (₹)">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span>% of Total</span>
+              <input type="text" id="subsidy_percent" class="input-modern" readonly style="flex: 1;">
+            </div>
+          </div>
+          
+          <div class="grid-2">
+            <strong>TOTAL FUNDS</strong>
+            <input type="number" id="total-funds" class="input-modern" readonly placeholder="₹">
+            <div></div>
+            <strong>100%</strong>
+          </div>
+          
+          <button type="button" class="btn-next-spacious nextSectionBtn">Next →</button>
+        </div>
+
+        <!-- SECTION 7: PROJECTIONS -->
+        <div id="sectionCard7" class="dpr-section-card" style="display:none;">
+          <div class="section-title-main">📈 Financial Projections (5 Years)</div>
+          
+          <div class="table-responsive">
+            <table class="table-elegant">
+              <thead>
+                <tr>
+                  <th>Particulars (₹)</th>
+                  <th>Year 1</th>
+                  <th>Year 2</th>
+                  <th>Year 3</th>
+                  <th>Year 4</th>
+                  <th>Year 5</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Capacity Utilization (%)</td>
+                  <td><input type="number" id="cap_year1" class="input-modern" value="60"></td>
+                  <td><input type="number" id="cap_year2" class="input-modern" value="75"></td>
+                  <td><input type="number" id="cap_year3" class="input-modern" value="85"></td>
+                  <td><input type="number" id="cap_year4" class="input-modern" value="90"></td>
+                  <td><input type="number" id="cap_year5" class="input-modern" value="95"></td>
+                </tr>
+                <tr>
+                  <td>Revenue</td>
+                  <td><input type="number" id="rev_year1" class="input-modern" readonly></td>
+                  <td><input type="number" id="rev_year2" class="input-modern" readonly></td>
+                  <td><input type="number" id="rev_year3" class="input-modern" readonly></td>
+                  <td><input type="number" id="rev_year4" class="input-modern" readonly></td>
+                  <td><input type="number" id="rev_year5" class="input-modern" readonly></td>
+                </tr>
+                <tr>
+                  <td>Operating Expenses (70%)</td>
+                  <td><input type="number" id="exp_year1" class="input-modern" readonly></td>
+                  <td><input type="number" id="exp_year2" class="input-modern" readonly></td>
+                  <td><input type="number" id="exp_year3" class="input-modern" readonly></td>
+                  <td><input type="number" id="exp_year4" class="input-modern" readonly></td>
+                  <td><input type="number" id="exp_year5" class="input-modern" readonly></td>
+                </tr>
+                <tr>
+                  <td>PBDIT</td>
+                  <td><input type="number" id="pbdit_year1" class="input-modern" readonly></td>
+                  <td><input type="number" id="pbdit_year2" class="input-modern" readonly></td>
+                  <td><input type="number" id="pbdit_year3" class="input-modern" readonly></td>
+                  <td><input type="number" id="pbdit_year4" class="input-modern" readonly></td>
+                  <td><input type="number" id="pbdit_year5" class="input-modern" readonly></td>
+                </tr>
+                <tr>
+                  <td>Interest (10% on loan)</td>
+                  <td><input type="number" id="int_year1" class="input-modern" value="2500000"></td>
+                  <td><input type="number" id="int_year2" class="input-modern" value="2250000"></td>
+                  <td><input type="number" id="int_year3" class="input-modern" value="2000000"></td>
+                  <td><input type="number" id="int_year4" class="input-modern" value="1750000"></td>
+                  <td><input type="number" id="int_year5" class="input-modern" value="1500000"></td>
+                </tr>
+                <tr>
+                  <td>Depreciation</td>
+                  <td><input type="number" id="dep_year1" class="input-modern" value="880000"></td>
+                  <td><input type="number" id="dep_year2" class="input-modern" value="792000"></td>
+                  <td><input type="number" id="dep_year3" class="input-modern" value="713000"></td>
+                  <td><input type="number" id="dep_year4" class="input-modern" value="642000"></td>
+                  <td><input type="number" id="dep_year5" class="input-modern" value="578000"></td>
+                </tr>
+                <tr>
+                  <td>PBT</td>
+                  <td><input type="number" id="pbt_year1" class="input-modern" readonly></td>
+                  <td><input type="number" id="pbt_year2" class="input-modern" readonly></td>
+                  <td><input type="number" id="pbt_year3" class="input-modern" readonly></td>
+                  <td><input type="number" id="pbt_year4" class="input-modern" readonly></td>
+                  <td><input type="number" id="pbt_year5" class="input-modern" readonly></td>
+                </tr>
+                <tr>
+                  <td>Tax (25%)</td>
+                  <td><input type="number" id="tax_year1" class="input-modern" readonly></td>
+                  <td><input type="number" id="tax_year2" class="input-modern" readonly></td>
+                  <td><input type="number" id="tax_year3" class="input-modern" readonly></td>
+                  <td><input type="number" id="tax_year4" class="input-modern" readonly></td>
+                  <td><input type="number" id="tax_year5" class="input-modern" readonly></td>
+                </tr>
+                <tr>
+                  <td><strong>PAT (Net Profit)</strong></td>
+                  <td><input type="number" id="pat_year1" class="input-modern" readonly></td>
+                  <td><input type="number" id="pat_year2" class="input-modern" readonly></td>
+                  <td><input type="number" id="pat_year3" class="input-modern" readonly></td>
+                  <td><input type="number" id="pat_year4" class="input-modern" readonly></td>
+                  <td><input type="number" id="pat_year5" class="input-modern" readonly></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <button type="button" class="btn-next-spacious nextSectionBtn">Next →</button>
+        </div>
+
+        <!-- SECTION 8: INFRASTRUCTURE -->
+        <div id="sectionCard8" class="dpr-section-card" style="display:none;">
+          <div class="section-title-main">🏗️ Infrastructure Details</div>
+          
+          <div class="grid-3">
+            <input type="text" name="workspace" class="input-modern" placeholder="Workspace Status (Owned/Rented)">
+            <input type="number" name="builtup_area" class="input-modern" placeholder="Built-up Area (sq.ft.)">
+            <input type="number" name="power_required" class="input-modern" placeholder="Power Required (HP/KVA)">
+          </div>
+          
+          <div class="grid-3">
+            <input type="number" name="water_required" class="input-modern" placeholder="Water Required (Liters/day)">
+            <input type="number" name="monthly_rent" class="input-modern" placeholder="Monthly Rent (if rented) (₹)">
+            <input type="number" name="start_time" class="input-modern" placeholder="Time to Start Operations (months)">
+          </div>
+          
+          <button type="button" class="btn-next-spacious nextSectionBtn">Next →</button>
+        </div>
+
+        <!-- SECTION 9: SWOT -->
+        <div id="sectionCard9" class="dpr-section-card" style="display:none;">
+          <div class="section-title-main">🔍 SWOT Analysis</div>
+          
+          <textarea name="strengths" class="input-modern" rows="3" placeholder="Strengths"></textarea>
+          <textarea name="weaknesses" class="input-modern mt-3" rows="3" placeholder="Weaknesses"></textarea>
+          <textarea name="opportunities" class="input-modern mt-3" rows="3" placeholder="Opportunities"></textarea>
+          <textarea name="threats" class="input-modern mt-3" rows="3" placeholder="Threats"></textarea>
+          
+          <button type="button" class="btn-next-spacious nextSectionBtn">Next →</button>
+        </div>
+
+        <!-- SECTION 10: SOCIAL IMPACT -->
+        <div id="sectionCard10" class="dpr-section-card" style="display:none;">
+          <div class="section-title-main">🌱 Social & Environmental Impact</div>
+          
+          <div class="grid-3">
+            <input type="number" name="local_employment" class="input-modern" placeholder="Local Employment (persons)">
+            <input type="number" name="women_employment" class="input-modern" placeholder="Women Employment (persons)">
+            <input type="number" name="youth_employment" class="input-modern" placeholder="Youth Employment (persons)">
+          </div>
+          
+          <div class="grid-2">
+            <input type="text" name="eco_friendly" class="input-modern" placeholder="Eco-friendly Practices (Yes/No)">
+            <input type="text" name="training" class="input-modern" placeholder="Training Provided (Yes/No)">
+          </div>
+          
+          <textarea name="eco_description" class="input-modern" rows="2" placeholder="Describe Eco-friendly Initiatives"></textarea>
+          
+          <button type="button" class="btn-next-spacious nextSectionBtn">Next →</button>
+        </div>
+
+        <!-- SECTION 11: CREDIT HISTORY -->
+        <div id="sectionCard11" class="dpr-section-card" style="display:none;">
+          <div class="section-title-main">💳 Credit History</div>
+          
+          <div class="grid-3">
+            <input type="number" name="cibil_score" class="input-modern" placeholder="CIBIL Score" value="785">
+            <input type="text" name="loan_before" class="input-modern" placeholder="Taken Loan Before? (Yes/No)">
+            <input type="number" name="existing_loan" class="input-modern" placeholder="Existing Loan Amount (₹)">
+          </div>
+          
+          <div class="grid-2">
+            <input type="number" name="outstanding" class="input-modern" placeholder="Outstanding Amount (₹)">
+            <input type="text" name="default_history" class="input-modern" placeholder="Default History (Yes/No)">
+          </div>
+          
+          <button type="button" class="btn-next-spacious nextSectionBtn">Next →</button>
+        </div>
+
+          <!-- SECTION 13: DECLARATION & REPORT -->
+        <div id="sectionCard12" class="dpr-section-card" style="display:none; padding: 2rem 2.5rem;">
+          <div class="section-title-main" style="margin-bottom: 2rem;">📄 Declaration & Report Generation</div>
+          
+          <div class="grid-3" style="margin-bottom: 2rem;">
+            <input type="text" name="declarant_name" class="input-modern" placeholder="Declarant Name">
+            <input type="text" name="designation" class="input-modern" placeholder="Designation">
+            <input type="text" name="place" class="input-modern" placeholder="Place">
+          </div>
+          
+          <div style="margin-bottom: 2.5rem;">
+            <input type="date" name="declaration_date" class="input-modern" id="declaration-date" style="width: 100%; max-width: 320px;">
+          </div>
+          
+          <hr style="margin: 2rem 0 3rem 0; border: none; border-top: 1px solid #eef2fa;">
+          
+          <div style="display: flex; justify-content: center; margin: 2rem 0 1rem 0;">
+            <button type="button" class="btn-generate-warning" id="generateReportBtn" style="padding: 1rem 2.5rem; font-size: 1rem; min-width: 350px;">
+              <i class="fas fa-file-alt"></i> GENERATE DETAILED PROJECT REPORT
+            </button>
+          </div>
+        </div>
+      </form>
+    </main>
+  </div>
+</div>
+
+<script>
+  // ----------------- AUTH SYSTEM (identical to original specs)
+  let usersDb = JSON.parse(localStorage.getItem('dpr_users_main')) || [];
+  if(usersDb.length===0) usersDb.push({id:1,name:"Demo User",email:"demo@example.com",password:"demo123"});
+  let activeSession = JSON.parse(sessionStorage.getItem('dpr_current_user_main')) || null;
+  function renderAuthUI(){ if(activeSession){ document.getElementById('loginView').style.display='none'; document.getElementById('registerView').style.display='none'; document.getElementById('dashboardMainApp').style.display='block'; document.getElementById('sideUserName').innerText=activeSession.name; } else { document.getElementById('loginView').style.display='flex'; document.getElementById('registerView').style.display='none'; document.getElementById('dashboardMainApp').style.display='none'; } }
+  document.getElementById('loginFormHandler')?.addEventListener('submit',(e)=>{ e.preventDefault(); let u=usersDb.find(u=>u.email===document.getElementById('loginEmailField').value && u.password===document.getElementById('loginPasswordField').value); if(u){ activeSession={id:u.id,name:u.name,email:u.email}; sessionStorage.setItem('dpr_current_user_main',JSON.stringify(activeSession)); renderAuthUI(); } else { let errDiv=document.getElementById('loginErrorMsg'); errDiv.innerText="Invalid credentials (demo@example.com / demo123)"; errDiv.style.display='block'; setTimeout(()=>errDiv.style.display='none',2000); } });
+  document.getElementById('registerFormHandler')?.addEventListener('submit',(e)=>{ e.preventDefault(); let name=document.getElementById('regFullName').value,email=document.getElementById('regEmailAddr').value,pwd=document.getElementById('regPasswordInput').value,conf=document.getElementById('regConfirmInput').value; if(pwd!==conf){ alert("Passwords mismatch");return;} if(usersDb.find(u=>u.email===email)){ alert("Email exists");return;} usersDb.push({id:usersDb.length+1,name,email,password:pwd}); localStorage.setItem('dpr_users_main',JSON.stringify(usersDb)); alert("Registration success! Please login."); document.getElementById('loginView').style.display='flex'; document.getElementById('registerView').style.display='none'; });
+  document.getElementById('showRegisterBtn')?.addEventListener('click',()=>{ document.getElementById('loginView').style.display='none'; document.getElementById('registerView').style.display='flex'; });
+  document.getElementById('backToLoginBtn')?.addEventListener('click',()=>{ document.getElementById('registerView').style.display='none'; document.getElementById('loginView').style.display='flex'; });
+  document.getElementById('globalLogoutButton')?.addEventListener('click',()=>{ sessionStorage.removeItem('dpr_current_user_main'); activeSession=null; renderAuthUI(); });
+  // ----------------- FULL FEATURES: members, machinery, calculations, navigation
+  let allSections = Array.from({length:13},(_,i)=>document.getElementById(`sectionCard${i}`));
+  let currentSectionIdx = 0;
+  function setActiveSection(idx){ allSections.forEach((sec,i)=>{ sec.style.display = i===idx ? 'block' : 'none'; }); let pct=((idx+1)/13)*100; document.getElementById('globalProgressFill').style.width=`${pct}%`; document.getElementById('stepCounterSpan').innerText=`Step ${idx+1}/13`; document.querySelectorAll('.nav-link-side').forEach((el,i)=>{ if(i===idx) el.classList.add('active'); else el.classList.remove('active'); }); }
+  document.querySelectorAll('.nextSectionBtn').forEach(btn=>btn.addEventListener('click',()=>{ if(currentSectionIdx<12){ currentSectionIdx++; setActiveSection(currentSectionIdx); window.scrollTo(0,0); } }));
+  document.querySelectorAll('[data-sidx]').forEach(el=>{ el.addEventListener('click',()=>{ currentSectionIdx=parseInt(el.getAttribute('data-sidx')); setActiveSection(currentSectionIdx); }); });
+  setActiveSection(0);
+  // Members dynamic
+  let memberId=1; const membersTbody=document.getElementById('membersContainerTable'); function addMemberRow(){ let tr=document.createElement('tr'); tr.innerHTML=`<td>${memberId}</td><td><input class="input-modern member-name"></td><td><input class="input-modern member-role"></td><td><input class="input-modern member-age"></td><td><input class="input-modern member-qual"></td><td><input class="input-modern member-exp"></td><td><input class="input-modern member-mobile"></td><td><button class="btn-outline-accent-add removeMem">Remove</button></td>`; membersTbody.appendChild(tr); tr.querySelector('.removeMem').onclick=()=>tr.remove(); memberId++; } document.getElementById('addMemberBtnDynamic')?.addEventListener('click',addMemberRow); addMemberRow();
+  // Machinery
+  let machineryRows=[]; const machBody=document.getElementById('machineryTableDynamic'); function addMachineryLine(){ let idx=machineryRows.length+1; let row=document.createElement('tr'); row.innerHTML=`<td>${idx}</td><td><input class="input-modern mach-name"></td><td><input type="number" class="input-modern mach-qty" value="1"></td><td><input type="number" class="input-modern mach-price"></td><td><input class="input-modern mach-total" readonly></td><td><button class="btn-outline-accent-add removeMach">✖</button></td>`; machBody.appendChild(row); row.querySelector('.mach-qty').addEventListener('input',()=>updateMachTotal(row)); row.querySelector('.mach-price').addEventListener('input',()=>updateMachTotal(row)); row.querySelector('.removeMach').onclick=()=>{ row.remove(); updateMachinerySum(); }; updateMachTotal(row); } function updateMachTotal(row){ let qty=Number(row.querySelector('.mach-qty').value)||0; let price=Number(row.querySelector('.mach-price').value)||0; row.querySelector('.mach-total').value=qty*price; updateMachinerySum(); } function updateMachinerySum(){ let sum=0; document.querySelectorAll('.mach-total').forEach(inp=>sum+=Number(inp.value)||0); document.getElementById('machinery_total').value=sum; calculateTotalCost(); } document.getElementById('addMachineryBtnForm')?.addEventListener('click',addMachineryLine); for(let i=0;i<2;i++) addMachineryLine();
+  // staff calc & revenue
+  function calcStaff(){ let mgmt=Number(document.getElementById('mgmt_count').value)*Number(document.getElementById('mgmt_salary').value); let sup=Number(document.getElementById('sup_count').value)*Number(document.getElementById('sup_salary').value); let skill=Number(document.getElementById('skill_count').value)*Number(document.getElementById('skill_salary').value); let unskill=Number(document.getElementById('unskill_count').value)*Number(document.getElementById('unskill_salary').value); let admin=Number(document.getElementById('admin_count').value)*Number(document.getElementById('admin_salary').value); let total=mgmt+sup+skill+unskill+admin; let staffCount=Number(document.getElementById('mgmt_count').value)+Number(document.getElementById('sup_count').value)+Number(document.getElementById('skill_count').value)+Number(document.getElementById('unskill_count').value)+Number(document.getElementById('admin_count').value); document.getElementById('mgmt_cost').value=mgmt; document.getElementById('sup_cost').value=sup; document.getElementById('skill_cost').value=skill; document.getElementById('unskill_cost').value=unskill; document.getElementById('admin_cost').value=admin; document.getElementById('total_staff_display').innerText=staffCount; document.getElementById('total_salary_cost_display').innerText=total.toLocaleString(); } document.querySelectorAll('#mgmt_count,#mgmt_salary,#sup_count,#sup_salary,#skill_count,#skill_salary,#unskill_count,#unskill_salary,#admin_count,#admin_salary').forEach(el=>el.addEventListener('input',calcStaff)); calcStaff();
+  function calcRevenueProj(){ let dailyCap=Number(document.querySelector('input[name="daily_capacity"]')?.value)||0; let price=Number(document.querySelector('input[name="selling_price"]')?.value)||0; let maxRev=dailyCap*price*300; for(let i=1;i<=5;i++){ let cap=Number(document.getElementById(`cap_year${i}`)?.value)||0; let rev=Math.round(maxRev*cap/100); if(document.getElementById(`rev_year${i}`)) document.getElementById(`rev_year${i}`).value=rev; } for(let i=1;i<=5;i++){ let rev=Number(document.getElementById(`rev_year${i}`)?.value)||0; let exp=rev*0.7; let pbdit=rev-exp; let interest=Number(document.getElementById(`int_year${i}`)?.value)||0; let dep=Number(document.getElementById(`dep_year${i}`)?.value)||0; let pbt=pbdit-interest-dep; let tax=pbt>0?Math.round(pbt*0.25):0; let pat=pbt-tax; document.getElementById(`exp_year${i}`).value=exp; document.getElementById(`pbdit_year${i}`).value=pbdit; document.getElementById(`pbt_year${i}`).value=pbt; document.getElementById(`tax_year${i}`).value=tax; document.getElementById(`pat_year${i}`).value=pat; } } document.querySelector('input[name="daily_capacity"]')?.addEventListener('input',calcRevenueProj); document.querySelector('input[name="selling_price"]')?.addEventListener('input',calcRevenueProj); for(let i=1;i<=5;i++) document.getElementById(`cap_year${i}`)?.addEventListener('input',calcRevenueProj); calcRevenueProj();
+  function calculateTotalCost(){ let land=Number(document.getElementById('land_cost').value)||0; let building=Number(document.getElementById('building_cost').value)||0; let machinery=Number(document.getElementById('machinery_total').value)||0; let furniture=Number(document.getElementById('furniture_cost').value)||0; let wc=Number(document.getElementById('working_capital').value)||0; let other=Number(document.getElementById('other_cost').value)||0; let total=land+building+machinery+furniture+wc+other; document.getElementById('total-cost').value=total; let promoter=Number(document.getElementById('promoter_contribution').value)||0; let loan=Number(document.getElementById('bank_loan').value)||0; let subsidy=Number(document.getElementById('subsidy').value)||0; let funds=promoter+loan+subsidy; document.getElementById('total-funds').value=funds; if(total>0){ document.getElementById('promoter_percent').value=Math.round((promoter/total)*100)+'%'; document.getElementById('loan_percent').value=Math.round((loan/total)*100)+'%'; document.getElementById('subsidy_percent').value=Math.round((subsidy/total)*100)+'%'; } } document.querySelectorAll('.project-cost').forEach(el=>el.addEventListener('input',calculateTotalCost)); calculateTotalCost();
+  // report generation
+  document.getElementById('generateFullReportBtn')?.addEventListener('click',()=>{ const formData=new FormData(document.getElementById('dprFullForm')); let members=[]; document.querySelectorAll('#membersContainerTable tr').forEach(r=>{ members.push({name:r.querySelector('.member-name')?.value,role:r.querySelector('.member-role')?.value,age:r.querySelector('.member-age')?.value}); }); let reportText=`DETAILED PROJECT REPORT (BANK READY)\nBusiness: ${formData.get('business_name')||'N/A'}\nLocation: ${formData.get('village')||''}, ${formData.get('district')||''}\nTotal Project Cost: ₹${document.getElementById('total-cost').value}\nYear3 PAT: ₹${document.getElementById('pat_year3')?.value}\nGenerated by DPR Studio.`; document.getElementById('reportRenderedHtml').innerHTML=`<pre style="white-space:pre-wrap;">${reportText}</pre>`; document.getElementById('reportGlobalModal').style.display='block'; });
+  window.closeReportModal=()=>document.getElementById('reportGlobalModal').style.display='none'; window.downloadReportTxt=()=>{ let blob=new Blob([document.getElementById('reportRenderedHtml').innerText],{type:'text/plain'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download="DPR_Report.txt"; a.click(); }; window.printReportContent=()=>{ let w=window.open(); w.document.write(`<pre>${document.getElementById('reportRenderedHtml').innerText}</pre>`); w.print(); };
+  renderAuthUI();
+</script>
+</body>
+</html>
